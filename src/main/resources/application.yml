@@ -1,0 +1,96 @@
+# 开发环境配置
+server:
+  # 服务器的HTTP端口
+  port: ${port:8011}
+  servlet:
+    # 应用的访问路径
+    context-path: /
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # tomcat最大线程数，默认为200
+    max-threads: 800
+    # Tomcat启动初始化的线程数，默认值25
+    min-spare-threads: 30
+
+# 日志配置
+logging:
+  level:
+    com.dcqc: debug
+    org.springframework: warn
+
+# Spring配置
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  servlet:
+    multipart:
+      max-file-size: 20MB
+  profiles:
+    active: test # @spring.profiles.active@
+  # 服务模块
+  devtools:
+    restart:
+      # 热部署开关
+      enabled: true
+  cache:
+    type: redis
+
+#mybatis-plus
+mybatis-plus:
+  type-aliases-package: com.dcqc.enrollment.biz.orm.**.entity
+  global-config:
+    db-config:
+      #驼峰下划线转换
+      column-underline: true
+      db-type: mysql
+      logic-delete-field: isDeleted
+      logic-not-delete-value: -1
+      logic-delete-value: 1
+    refresh: false
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*:/mapper/**/*.xml
+  typeEnumsPackage: com.dcqc.enrollment.biz.orm.**.enums;
+#pageHelper
+pagehelper:
+  helper-dialect: mysql
+  reasonable: false
+  pageSizeZero: false
+  params: count=countSql
+
+# Swagger配置
+swagger:
+  # 是否开启swagger
+  enabled: true
+knife4j:
+  enable: true
+  setting:
+    enableDynamicParameter: true
+
+# 第三方API
+api:
+  # 浪潮云OSS配置
+  inspur:
+    cloud:
+      oss:
+        enable: false
+        bucket-name: seal-dev
+        endpoint: oss.chongqing-hlw.inspurcloudoss.com
+        access-key: ZTAwMGY5YzUtY2I1YS00MjNjLTk3NjQtNTdhZTRhZjllMjYy
+        secret-key: ODg0OWZkMGItMTYxZS00MmM3LWIwMTAtNzc1MDhiMDc1YTY2
+  # 政务数据资源共享系统
+  gdrss:
+    url: http://23.212.180.252:8070
+    username: "sdzzwb"
+    password: "@WSX3edc"
+    md5pwd: "65618383e140db353d238a14a1fdb2f5"
+  token-valid:
+    enabled: true
+    ignoreUrl:
+
+environment:
+  file-suffix-list: jpg,png,bmp,jpeg,pdf
